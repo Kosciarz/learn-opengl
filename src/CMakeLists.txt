@@ -4,6 +4,8 @@ set(SOURCES
     "GLUtils.cpp"
     "Shader.hpp"
     "Shader.cpp"
+    "Engine.hpp"
+    "Engine.cpp"
 )
 
 add_executable(LearnOpenGL ${SOURCES})

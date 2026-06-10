@@ -20,19 +20,34 @@ int main() {
     try {
         learn::Engine engine;
 
-        std::array<Vertex, 3> vertices{{
+        std::array<Vertex, 4> vertices{{
             {.position = {-0.5f, -0.5f, 0.0f}, .color = {1.0f, 0.0f, 0.0f}},
             {.position = {0.5f, -0.5f, 0.0f}, .color = {0.0f, 1.0f, 0.0f}},
-            {.position = {0.0f, 0.5f, 0.0f}, .color = {0.0f, 0.0f, 1.0f}},
+            {.position = {0.5f, 0.5f, 0.0f}, .color = {0.0f, 0.0f, 1.0f}},
+            {.position = {-0.5f, 0.5f, 0.0f}, .color = {1.0f, 0.0f, 1.0f}},
         }};
 
-        GLuint vao, vbo;
+        std::array<unsigned int, 6> indices{0, 1, 2, 2, 3, 0};
+
+        GLuint vao{0};
         glCreateVertexArrays(1, &vao);
+
+        GLuint vbo{0};
         glCreateBuffers(1, &vbo);
 
-        glNamedBufferData(vbo, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
-        glVertexArrayVertexBuffer(vao, 0, vbo, 0, sizeof(Vertex));
+        GLuint ebo{0};
+        glCreateBuffers(1, &ebo);
 
+        // upload data to buffers
+        glNamedBufferData(vbo, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
+        glNamedBufferData(
+            ebo, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
+
+        // attach buffers to vao
+        glVertexArrayVertexBuffer(vao, 0, vbo, 0, sizeof(Vertex));
+        glVertexArrayElementBuffer(vao, ebo);
+
+        // attributes
         glEnableVertexArrayAttrib(vao, 0);
         glVertexArrayAttribFormat(vao, 0, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, position));
         glVertexArrayAttribBinding(vao, 0, 0);
@@ -51,7 +66,7 @@ int main() {
 
             shader.use();
             glBindVertexArray(vao);
-            glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+            glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
 
             glfwSwapBuffers(engine.window());
             glfwPollEvents();

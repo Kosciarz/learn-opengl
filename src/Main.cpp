@@ -11,29 +11,35 @@
 
 static const std::filesystem::path SHADER_DIR{SHADER_DIRECTORY};
 
+struct Vertex {
+    glm::vec3 position;
+    glm::vec3 color;
+};
+
 int main() {
     try {
         learn::Engine engine;
 
-        std::array<glm::vec2, 3> vertices{{
-            {-0.5f, -0.5f},
-            {0.5f, -0.5f},
-            {0.0f, 0.5f},
+        std::array<Vertex, 3> vertices{{
+            {.position = {-0.5f, -0.5f, 0.0f}, .color = {1.0f, 0.0f, 0.0f}},
+            {.position = {0.5f, -0.5f, 0.0f}, .color = {0.0f, 1.0f, 0.0f}},
+            {.position = {0.0f, 0.5f, 0.0f}, .color = {0.0f, 0.0f, 1.0f}},
         }};
 
         GLuint vao, vbo;
         glCreateVertexArrays(1, &vao);
         glCreateBuffers(1, &vbo);
 
-        glNamedBufferData(
-            vbo, vertices.size() * sizeof(glm::vec2), vertices.data(), GL_STATIC_DRAW);
+        glNamedBufferData(vbo, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
+        glVertexArrayVertexBuffer(vao, 0, vbo, 0, sizeof(Vertex));
 
-        glVertexArrayVertexBuffer(vao, 0, vbo, 0, sizeof(glm::vec2));
-
-        glVertexArrayAttribFormat(vao, 0, 2, GL_FLOAT, GL_FALSE, 0);
-
-        glVertexArrayAttribBinding(vao, 0, 0);
         glEnableVertexArrayAttrib(vao, 0);
+        glVertexArrayAttribFormat(vao, 0, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, position));
+        glVertexArrayAttribBinding(vao, 0, 0);
+
+        glEnableVertexArrayAttrib(vao, 1);
+        glVertexArrayAttribFormat(vao, 1, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, color));
+        glVertexArrayAttribBinding(vao, 1, 0);
 
         const auto vertex_path = SHADER_DIR / "vertex.vert";
         const auto fragment_path = SHADER_DIR / "fragment.frag";

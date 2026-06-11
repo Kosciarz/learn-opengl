@@ -1,18 +1,25 @@
 set(SOURCES
     "Main.cpp"
-    "GLUtils.hpp"
     "GLUtils.cpp"
-    "Shader.hpp"
-    "Shader.cpp"
-    "Engine.hpp"
     "Engine.cpp"
+    "Shader.cpp"
+    "Texture.cpp"
+    "stb_image_impl.cpp"
 )
 
-add_executable(LearnOpenGL ${SOURCES})
-target_compile_definitions(LearnOpenGL
-    PRIVATE SHADER_DIRECTORY="${CMAKE_CURRENT_SOURCE_DIR}/Shaders"
+set(HEADERS
+    "GLUtils.hpp"
+    "Engine.hpp"
+    "Shader.hpp"
+    "Texture.hpp"
 )
-target_link_libraries(LearnOpenGL
-    PRIVATE OpenGL::GL glm::glm glfw glad
+
+add_executable(LearnOpenGL ${SOURCES} ${HEADERS})
+target_compile_definitions(LearnOpenGL PRIVATE
+    SHADER_DIRECTORY="${CMAKE_CURRENT_SOURCE_DIR}/shaders"
+    TEXTURE_DIRECTORY="${CMAKE_CURRENT_SOURCE_DIR}/textures"
+)
+target_link_libraries(LearnOpenGL PRIVATE
+    OpenGL::GL glm::glm glfw glad stb_image
 )
 

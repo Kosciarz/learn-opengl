@@ -39,3 +39,4 @@ add_subdirectory("${glad_SOURCE_DIR}/cmake" glad_cmake)
 glad_add_library(glad REPRODUCIBLE EXCLUDE_FROM_ALL LOADER API gl:core=4.6)
 
 add_subdirectory(src)
+add_subdirectory(vendor/stb)

@@ -16,6 +16,9 @@ namespace learn {
 
         void use() const { glUseProgram(m_program); }
         void unuse() const { glUseProgram(0); }
+        [[nodiscard]] GLint uniform_location(const std::string& name) const {
+            return glGetUniformLocation(m_program, name.c_str());
+        }
 
     private:
         GLuint m_program;

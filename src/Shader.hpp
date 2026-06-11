@@ -8,9 +8,15 @@ namespace learn {
 
     class Shader {
     public:
-        Shader(const std::filesystem::path& vertex_path,
-               const std::filesystem::path& fragment_path);
+        explicit Shader(const std::filesystem::path& vertex_path,
+                        const std::filesystem::path& fragment_path);
         ~Shader();
+
+        Shader(const Shader&) = delete;
+        Shader& operator=(const Shader&) = delete;
+
+        Shader(Shader&& other) noexcept;
+        Shader& operator=(Shader&& other) noexcept;
 
         [[nodiscard]] GLuint program() const { return m_program; }
 

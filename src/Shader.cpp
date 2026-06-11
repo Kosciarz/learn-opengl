@@ -86,4 +86,22 @@ namespace learn {
         }
     }
 
+    Shader::Shader(Shader&& other) noexcept
+        : m_program{other.m_program} {
+        other.m_program = 0;
+    }
+
+    Shader& Shader::operator=(Shader&& other) noexcept {
+        if (this != &other) {
+            if (m_program) {
+                glDeleteProgram(m_program);
+            }
+
+            m_program = other.m_program;
+            other.m_program = 0;
+        }
+
+        return *this;
+    }
+
 } // namespace learn

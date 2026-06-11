@@ -23,7 +23,7 @@ int main() {
     try {
         learn::Engine engine;
 
-        std::array<Vertex, 3> vertices{{
+        std::array<Vertex, 4> vertices{{
             {
                 .position = {-0.5f, -0.5f, 0.0f},
                 .color = {1.0f, 0.0f, 0.0f},
@@ -35,13 +35,18 @@ int main() {
                 .texture_coords = {1.0f, 0.0f},
             },
             {
-                .position = {0.0f, 0.5f, 0.0f},
+                .position = {0.5f, 0.5f, 0.0f},
                 .color = {0.0f, 0.0f, 1.0f},
-                .texture_coords = {0.5f, 1.0f},
+                .texture_coords = {1.0f, 1.0f},
+            },
+            {
+                .position = {-0.5f, 0.5f, 0.0f},
+                .color = {1.0f, 1.0f, 0.0f},
+                .texture_coords = {0.0f, 1.0f},
             },
         }};
 
-        std::array<unsigned int, 6> indices{0, 1, 2};
+        std::array<unsigned int, 6> indices{0, 1, 2, 2, 3, 0};
 
         GLuint vao{0};
         glCreateVertexArrays(1, &vao);
@@ -102,8 +107,7 @@ int main() {
             brick_wall_texture.bind(0);
 
             glBindVertexArray(vao);
-            // glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
-            glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+            glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
 
             glfwSwapBuffers(engine.window());
             glfwPollEvents();

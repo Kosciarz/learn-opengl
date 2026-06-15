@@ -103,8 +103,10 @@ int main() {
 
             shader.use();
             glUniform1i(shader.uniform_location("texture0"), 0);
+            glUniform1i(shader.uniform_location("texture1"), 1);
 
             brick_wall_texture.bind(0);
+            awesome_face_texture.bind(1);
 
             glBindVertexArray(vao);
             glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);

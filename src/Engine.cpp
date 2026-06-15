@@ -1,6 +1,5 @@
 #include "Engine.hpp"
 #include "GLUtils.hpp"
-#include "Shader.hpp"
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>

@@ -5,6 +5,8 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <print>
 #include <array>
@@ -97,13 +99,29 @@ int main() {
 
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+        double last_time = glfwGetTime();
+        float angle = 0.0f;
+
         while (!glfwWindowShouldClose(engine.window())) {
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
+            const double current_time = glfwGetTime();
+            const double delta_time = current_time - last_time;
+            last_time = current_time;
+
+            angle += static_cast<float>(delta_time);
+
+            glm::mat4 transform = glm::mat4(1.0f);
+            transform = glm::rotate(transform, angle, glm::vec3{0.0f, 0.0f, 1.0f});
+            transform = glm::translate(transform, glm::vec3{0.5f, 0.5f, 0.5f});
+            transform = glm::scale(transform, glm::vec3{0.5f, 0.5f, 0.5f});
+
             shader.use();
             glUniform1i(shader.uniform_location("texture0"), 0);
             glUniform1i(shader.uniform_location("texture1"), 1);
+            glUniformMatrix4fv(
+                shader.uniform_location("transform"), 1, GL_FALSE, glm::value_ptr(transform));
 
             brick_wall_texture.bind(0);
             awesome_face_texture.bind(1);

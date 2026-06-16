@@ -9,7 +9,9 @@
 
 namespace learn {
 
-    Engine::Engine() {
+    Engine::Engine()
+        : m_width{WINDOW_WIDTH},
+          m_height{WINDOW_HEIGHT} {
         glfwSetErrorCallback(
             [](const int error, const char* desc) { std::println("Error ({}): {}", error, desc); });
 
@@ -38,23 +40,12 @@ namespace learn {
             throw std::runtime_error{"Failed to init glad"};
         }
 
+        glfwSetWindowUserPointer(m_window, this);
+
         glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        glfwSetFramebufferSizeCallback(m_window,
-                                       [](GLFWwindow* window, const int width, const int height) {
-                                           glViewport(0, 0, width, height);
-                                       });
-
-        glfwSetKeyCallback(m_window,
-                           [](GLFWwindow* window,
-                              const int key,
-                              const int scancode,
-                              const int action,
-                              const int mods) {
-                               if (action == GLFW_RELEASE && key == GLFW_KEY_ESCAPE) {
-                                   glfwSetWindowShouldClose(window, true);
-                               }
-                           });
+        glfwSetFramebufferSizeCallback(m_window, Engine::framebuffer_size_callback);
+        glfwSetKeyCallback(m_window, Engine::key_callback);
 
         int flags;
         glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
@@ -73,4 +64,18 @@ namespace learn {
         glfwTerminate();
     }
 
+    void Engine::framebuffer_size_callback(GLFWwindow* window, const int width, const int height) {
+        glViewport(0, 0, width, height);
+
+        Engine* engine = static_cast<Engine*>(glfwGetWindowUserPointer(window));
+        engine->m_width = width;
+        engine->m_height = height;
+    }
+
+    void Engine::key_callback(
+        GLFWwindow* window, const int key, const int scancode, const int action, const int mods) {
+        if (action == GLFW_RELEASE && key == GLFW_KEY_ESCAPE) {
+            glfwSetWindowShouldClose(window, true);
+        }
+    }
 } // namespace learn

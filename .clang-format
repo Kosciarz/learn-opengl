@@ -22,3 +22,6 @@ SortIncludes: false
 
 BinPackArguments: false
 BinPackParameters: false
+
+BreakAfterReturnType: Automatic
+PenaltyReturnTypeOnItsOwnLine: 1000

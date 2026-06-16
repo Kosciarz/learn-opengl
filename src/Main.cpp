@@ -9,6 +9,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <print>
+#include <cmath>
 #include <array>
 #include <filesystem>
 
@@ -114,7 +115,7 @@ int main() {
 
             glm::mat4 transform = glm::mat4(1.0f);
             transform = glm::rotate(transform, angle, glm::vec3{0.0f, 0.0f, 1.0f});
-            transform = glm::translate(transform, glm::vec3{0.5f, 0.5f, 0.5f});
+            transform = glm::translate(transform, glm::vec3{0.0f, 0.5f, 0.0f});
             transform = glm::scale(transform, glm::vec3{0.5f, 0.5f, 0.5f});
 
             shader.use();
@@ -129,9 +130,31 @@ int main() {
             glBindVertexArray(vao);
             glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
 
+            glm::mat4 transform2 = glm::mat4(1.0f);
+            transform2 = glm::translate(transform2, glm::vec3{-0.5f, 0.5f, 0.0f});
+            const auto scale_amount = std::sin(angle);
+            transform2 =
+                glm::scale(transform2, glm::vec3{scale_amount, scale_amount, scale_amount});
+
+            shader.use();
+            glUniform1i(shader.uniform_location("texture0"), 0);
+            glUniform1i(shader.uniform_location("texture1"), 1);
+            glUniformMatrix4fv(
+                shader.uniform_location("transform"), 1, GL_FALSE, glm::value_ptr(transform2));
+
+            container_texture.bind(0);
+            awesome_face_texture.bind(1);
+
+            glBindVertexArray(vao);
+            glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
+
             glfwSwapBuffers(engine.window());
             glfwPollEvents();
         }
+
+        glDeleteVertexArrays(1, &vao);
+        glDeleteBuffers(1, &vbo);
+        glDeleteBuffers(1, &ebo);
     } catch (const std::exception& e) {
         std::println(stderr, "Error: {}", e.what());
     }

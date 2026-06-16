@@ -9,7 +9,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <print>
-#include <cmath>
 #include <array>
 #include <filesystem>
 
@@ -26,30 +25,208 @@ int main() {
     try {
         learn::Engine engine;
 
-        std::array<Vertex, 4> vertices{{
+        std::array<Vertex, 36> vertices{{
             {
-                .position = {-0.5f, -0.5f, 0.0f},
-                .color = {1.0f, 0.0f, 0.0f},
+                .position = {-0.5f, -0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
                 .texture_coords = {0.0f, 0.0f},
             },
             {
-                .position = {0.5f, -0.5f, 0.0f},
-                .color = {0.0f, 1.0f, 0.0f},
+                .position = {0.5f, -0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
                 .texture_coords = {1.0f, 0.0f},
             },
             {
-                .position = {0.5f, 0.5f, 0.0f},
-                .color = {0.0f, 0.0f, 1.0f},
+                .position = {0.5f, 0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
                 .texture_coords = {1.0f, 1.0f},
             },
             {
-                .position = {-0.5f, 0.5f, 0.0f},
-                .color = {1.0f, 1.0f, 0.0f},
+                .position = {0.5f, 0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 1.0f},
+            },
+            {
+                .position = {-0.5f, 0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 1.0f},
+            },
+            {
+                .position = {-0.5f, -0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 0.0f},
+            },
+
+            {
+                .position = {-0.5f, -0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 0.0f},
+            },
+            {
+                .position = {0.5f, -0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 0.0f},
+            },
+            {
+                .position = {0.5f, 0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 1.0f},
+            },
+            {
+                .position = {0.5f, 0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 1.0f},
+            },
+            {
+                .position = {-0.5f, 0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 1.0f},
+            },
+            {
+                .position = {-0.5f, -0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 0.0f},
+            },
+
+            {
+                .position = {-0.5f, 0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 0.0f},
+            },
+            {
+                .position = {-0.5f, 0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 1.0f},
+            },
+            {
+                .position = {-0.5f, -0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 1.0f},
+            },
+            {
+                .position = {-0.5f, -0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 1.0f},
+            },
+            {
+                .position = {-0.5f, -0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 0.0f},
+            },
+            {
+                .position = {-0.5f, 0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 0.0f},
+            },
+
+            {
+                .position = {0.5f, 0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 0.0f},
+            },
+            {
+                .position = {0.5f, 0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 1.0f},
+            },
+            {
+                .position = {0.5f, -0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 1.0f},
+            },
+            {
+                .position = {0.5f, -0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 1.0f},
+            },
+            {
+                .position = {0.5f, -0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 0.0f},
+            },
+            {
+                .position = {0.5f, 0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 0.0f},
+            },
+
+            {
+                .position = {-0.5f, -0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 1.0f},
+            },
+            {
+                .position = {0.5f, -0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 1.0f},
+            },
+            {
+                .position = {0.5f, -0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 0.0f},
+            },
+            {
+                .position = {0.5f, -0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 0.0f},
+            },
+            {
+                .position = {-0.5f, -0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 0.0f},
+            },
+            {
+                .position = {-0.5f, -0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 1.0f},
+            },
+
+            {
+                .position = {-0.5f, 0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 1.0f},
+            },
+            {
+                .position = {0.5f, 0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 1.0f},
+            },
+            {
+                .position = {0.5f, 0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 0.0f},
+            },
+            {
+                .position = {0.5f, 0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {1.0f, 0.0f},
+            },
+            {
+                .position = {-0.5f, 0.5f, 0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
+                .texture_coords = {0.0f, 0.0f},
+            },
+            {
+                .position = {-0.5f, 0.5f, -0.5f},
+                .color = {1.0f, 1.0f, 1.0f},
                 .texture_coords = {0.0f, 1.0f},
             },
         }};
 
-        std::array<unsigned int, 6> indices{0, 1, 2, 2, 3, 0};
+        std::array<glm::vec3, 10> cube_positions = {{
+            glm::vec3{0.0f, 0.0f, 0.0f},
+            glm::vec3{2.0f, 5.0f, -15.0f},
+            glm::vec3{-1.5f, -2.2f, -2.5f},
+            glm::vec3{-3.8f, -2.0f, -12.3f},
+            glm::vec3{2.4f, -0.4f, -3.5f},
+            glm::vec3{-1.7f, 3.0f, -7.5f},
+            glm::vec3{1.3f, -2.0f, -2.5f},
+            glm::vec3{1.5f, 2.0f, -2.5f},
+            glm::vec3{1.5f, 0.2f, -1.5f},
+            glm::vec3{-1.3f, 1.0f, -1.5f},
+        }};
+
+        // std::array<unsigned int, 6> indices{0, 1, 2, 2, 3, 0};
 
         GLuint vao{0};
         glCreateVertexArrays(1, &vao);
@@ -57,18 +234,18 @@ int main() {
         GLuint vbo{0};
         glCreateBuffers(1, &vbo);
 
-        GLuint ebo{0};
-        glCreateBuffers(1, &ebo);
+        // GLuint ebo{0};
+        // glCreateBuffers(1, &ebo);
 
         // upload data to buffers
         glNamedBufferData(vbo, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
-        glNamedBufferData(
-            ebo, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
+        // glNamedBufferData(
+        //     ebo, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
 
         // attach buffers to vao
         glVertexArrayVertexBuffer(vao, 0, vbo, 0, sizeof(Vertex));
-        glVertexArrayElementBuffer(vao, ebo);
-
+        // glVertexArrayElementBuffer(vao, ebo);
+        //
         // attributes
         // position
         glEnableVertexArrayAttrib(vao, 0);
@@ -100,12 +277,11 @@ int main() {
 
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+        glEnable(GL_DEPTH_TEST);
+
         while (!glfwWindowShouldClose(engine.window())) {
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
-            glm::mat4 model = glm::mat4(1.0f);
-            model = glm::rotate(model, glm::radians(-55.0f), glm::vec3{1.0f, 0.0f, 0.0f});
 
             glm::mat4 view = glm::mat4(1.0f);
             view = glm::translate(view, glm::vec3{0.0f, 0.0f, -3.0f});
@@ -113,24 +289,33 @@ int main() {
             glm::mat4 projection =
                 glm::perspective(glm::radians(45.0f), engine.aspect_ratio(), 0.1f, 100.0f);
 
-            // drawing
-            {
-                shader.use();
-                glUniform1i(shader.uniform_location("texture0"), 0);
-                glUniform1i(shader.uniform_location("texture1"), 1);
+            for (int i = 0; i < cube_positions.size(); ++i) {
+                glm::mat4 model = glm::mat4(1.0f);
+                model = glm::translate(model, cube_positions[i]);
+                const float angle = 20.0f * i;
+                model = glm::rotate(model, glm::radians(angle), glm::vec3{1.0f, 0.3f, 0.5f});
 
-                glUniformMatrix4fv(
-                    shader.uniform_location("model"), 1, GL_FALSE, glm::value_ptr(model));
-                glUniformMatrix4fv(
-                    shader.uniform_location("view"), 1, GL_FALSE, glm::value_ptr(view));
-                glUniformMatrix4fv(
-                    shader.uniform_location("projection"), 1, GL_FALSE, glm::value_ptr(projection));
+                // drawing
+                {
+                    shader.use();
+                    glUniform1i(shader.uniform_location("texture0"), 0);
+                    // glUniform1i(shader.uniform_location("texture1"), 1);
 
-                brick_wall_texture.bind(0);
-                awesome_face_texture.bind(1);
+                    glUniformMatrix4fv(
+                        shader.uniform_location("model"), 1, GL_FALSE, glm::value_ptr(model));
+                    glUniformMatrix4fv(
+                        shader.uniform_location("view"), 1, GL_FALSE, glm::value_ptr(view));
+                    glUniformMatrix4fv(shader.uniform_location("projection"),
+                                       1,
+                                       GL_FALSE,
+                                       glm::value_ptr(projection));
 
-                glBindVertexArray(vao);
-                glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
+                    brick_wall_texture.bind(0);
+                    // awesome_face_texture.bind(1);
+
+                    glBindVertexArray(vao);
+                    glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+                }
             }
 
             glfwSwapBuffers(engine.window());
@@ -139,7 +324,7 @@ int main() {
 
         glDeleteVertexArrays(1, &vao);
         glDeleteBuffers(1, &vbo);
-        glDeleteBuffers(1, &ebo);
+        // glDeleteBuffers(1, &ebo);
     } catch (const std::exception& e) {
         std::println(stderr, "Error: {}", e.what());
     }

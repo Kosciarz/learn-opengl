@@ -17,242 +17,133 @@ static const std::filesystem::path TEXTURE_DIR{TEXTURE_DIRECTORY};
 
 struct Vertex {
     glm::vec3 position;
-    glm::vec3 color;
-    // glm::vec2 texture_coords;
+    glm::vec2 uv;
 };
 
 int main() {
     try {
         learn::Engine engine;
 
-        // std::array<Vertex, 36> vertices{{
-        //     {
-        //         .position = {-0.5f, -0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 0.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, -0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 0.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, 0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, 0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {-0.5f, 0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {-0.5f, -0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 0.0f},
-        //     },
-        //
-        //     {
-        //         .position = {-0.5f, -0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 0.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, -0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 0.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, 0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, 0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {-0.5f, 0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {-0.5f, -0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 0.0f},
-        //     },
-        //
-        //     {
-        //         .position = {-0.5f, 0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 0.0f},
-        //     },
-        //     {
-        //         .position = {-0.5f, 0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {-0.5f, -0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {-0.5f, -0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {-0.5f, -0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 0.0f},
-        //     },
-        //     {
-        //         .position = {-0.5f, 0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 0.0f},
-        //     },
-        //
-        //     {
-        //         .position = {0.5f, 0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 0.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, 0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, -0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, -0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, -0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 0.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, 0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 0.0f},
-        //     },
-        //
-        //     {
-        //         .position = {-0.5f, -0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, -0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, -0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 0.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, -0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 0.0f},
-        //     },
-        //     {
-        //         .position = {-0.5f, -0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 0.0f},
-        //     },
-        //     {
-        //         .position = {-0.5f, -0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 1.0f},
-        //     },
-        //
-        //     {
-        //         .position = {-0.5f, 0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, 0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 1.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, 0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 0.0f},
-        //     },
-        //     {
-        //         .position = {0.5f, 0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {1.0f, 0.0f},
-        //     },
-        //     {
-        //         .position = {-0.5f, 0.5f, 0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 0.0f},
-        //     },
-        //     {
-        //         .position = {-0.5f, 0.5f, -0.5f},
-        //         .color = {1.0f, 1.0f, 1.0f},
-        //         .texture_coords = {0.0f, 1.0f},
-        //     },
-        // }};
-
-        std::array<Vertex, 8> vertices = {{
-            // front bottom left
+        std::array<Vertex, 24> vertices = {{
+            // front face bottom left
             {
                 .position = {-0.5f, -0.5f, 0.5f},
-                .color = {1.0f, 0.0f, 0.0f},
+                .uv = {0.0f, 0.0f},
             },
-            // front bottom right
+            // front face bottom right
             {
                 .position = {0.5f, -0.5f, 0.5f},
-                .color = {0.0f, 0.0f, 1.0f},
+                .uv = {1.0f, 0.0f},
             },
-            // front top right
+            // front face top right
             {
                 .position = {0.5f, 0.5f, 0.5f},
-                .color = {0.0f, 1.0f, 0.0f},
+                .uv = {1.0f, 1.0f},
             },
-            // front top left
+            // front face top left
             {
                 .position = {-0.5f, 0.5f, 0.5f},
-                .color = {1.0f, 0.0f, 1.0f},
+                .uv = {0.0f, 1.0f},
             },
-            // back bottom left
-            {
-                .position = {-0.5f, -0.5f, -0.5f},
-                .color = {1.0f, 0.0f, 0.0f},
-            },
-            // back bottom right
+            // back face bottom left
             {
                 .position = {0.5f, -0.5f, -0.5f},
-                .color = {0.0f, 0.0f, 1.0f},
+                .uv = {0.0f, 0.0f},
             },
-            // back top right
+            // back face bottom right
             {
-                .position = {0.5f, 0.5f, -0.5f},
-                .color = {0.0f, 1.0f, 0.0f},
+                .position = {-0.5f, -0.5f, -0.5f},
+                .uv = {1.0f, 0.0f},
             },
-            // back top left
+            // back face top right
             {
                 .position = {-0.5f, 0.5f, -0.5f},
-                .color = {1.0f, 0.0f, 1.0f},
+                .uv = {1.0f, 1.0f},
+            },
+            // back face top left
+            {
+                .position = {0.5f, 0.5f, -0.5f},
+                .uv = {0.0f, 1.0f},
+            },
+            // left face bottom left
+            {
+                .position = {-0.5f, -0.5f, -0.5f},
+                .uv = {0.0f, 0.0f},
+            },
+            // left face bottom right
+            {
+                .position = {-0.5f, -0.5f, 0.5f},
+                .uv = {1.0f, 0.0f},
+            },
+            // left face top right
+            {
+                .position = {-0.5f, 0.5f, 0.5f},
+                .uv = {1.0f, 1.0f},
+            },
+            // left face top left
+            {
+                .position = {-0.5f, 0.5f, -0.5f},
+                .uv = {0.0f, 1.0f},
+            },
+            // right face bottom left
+            {
+                .position = {0.5f, -0.5f, 0.5f},
+                .uv = {0.0f, 0.0f},
+            },
+            // right face bottom right
+            {
+                .position = {0.5f, -0.5f, -0.5f},
+                .uv = {1.0f, 0.0f},
+            },
+            // right face top right
+            {
+                .position = {0.5f, 0.5f, -0.5f},
+                .uv = {1.0f, 1.0f},
+            },
+            // right face top left
+            {
+                .position = {0.5f, 0.5f, 0.5f},
+                .uv = {0.0f, 1.0f},
+            },
+            // top face bottom left
+            {
+                .position = {-0.5f, 0.5f, 0.5f},
+                .uv = {0.0f, 0.0f},
+            },
+            // top face bottom right
+            {
+                .position = {0.5f, 0.5f, 0.5f},
+                .uv = {1.0f, 0.0f},
+            },
+            // top face top right
+            {
+                .position = {0.5f, 0.5f, -0.5f},
+                .uv = {1.0f, 1.0f},
+            },
+            // top face top left
+            {
+                .position = {-0.5f, 0.5f, -0.5f},
+                .uv = {0.0f, 1.0f},
+            },
+            // bottom face bottom left
+            {
+                .position = {-0.5f, -0.5f, -0.5f},
+                .uv = {0.0f, 0.0f},
+            },
+            // bottom face bottom right
+            {
+                .position = {0.5f, -0.5f, -0.5f},
+                .uv = {1.0f, 0.0f},
+            },
+            // bottom face top right
+            {
+                .position = {0.5f, -0.5f, 0.5f},
+                .uv = {1.0f, 1.0f},
+            },
+            // bottom face top left
+            {
+                .position = {-0.5f, -0.5f, 0.5f},
+                .uv = {0.0f, 1.0f},
             },
         }};
 
@@ -261,21 +152,21 @@ int main() {
             // front face
                 0, 1, 2,
                 2, 3, 0,
-            // top face
-                3, 2, 6,
-                6, 7, 3,
-            // right face
-                1, 5, 6,
-                6, 2, 1,
-            // left face
-                4, 0, 3,
-                3, 7, 4,
-            // down face
-                0, 1, 5,
-                5, 4, 0,
             // back face
-                5, 4, 7,
-                7, 6, 5,
+                4, 5, 6,
+                6, 7, 4,
+            // left face
+                8, 9, 10,
+                10, 11, 8,
+            // right face
+                12, 13, 14,
+                14, 15, 12,
+            // top face
+                16, 17, 18,
+                18, 19, 16,
+            // bottom face
+                20, 21, 22,
+                22, 23, 20,
         }};
         // clang-format on
 
@@ -316,15 +207,10 @@ int main() {
         glVertexArrayAttribFormat(vao, 0, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, position));
         glVertexArrayAttribBinding(vao, 0, 0);
 
-        // color
-        glEnableVertexArrayAttrib(vao, 1);
-        glVertexArrayAttribFormat(vao, 1, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, color));
-        glVertexArrayAttribBinding(vao, 1, 0);
-
         // texture coordinates
-        // glEnableVertexArrayAttrib(vao, 2);
-        // glVertexArrayAttribFormat(vao, 2, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex,
-        // texture_coords)); glVertexArrayAttribBinding(vao, 2, 0);
+        glEnableVertexArrayAttrib(vao, 1);
+        glVertexArrayAttribFormat(vao, 1, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, uv));
+        glVertexArrayAttribBinding(vao, 1, 0);
 
         const auto vertex_path = SHADER_DIR / "vertex.vert";
         const auto fragment_path = SHADER_DIR / "fragment.frag";
@@ -362,8 +248,8 @@ int main() {
                 // drawing
                 {
                     shader.use();
-                    // glUniform1i(shader.uniform_location("texture0"), 0);
-                    // glUniform1i(shader.uniform_location("texture1"), 1);
+                    glUniform1i(shader.uniform_location("texture0"), 0);
+                    glUniform1i(shader.uniform_location("texture1"), 1);
 
                     glUniformMatrix4fv(
                         shader.uniform_location("model"), 1, GL_FALSE, glm::value_ptr(model));
@@ -374,11 +260,10 @@ int main() {
                                        GL_FALSE,
                                        glm::value_ptr(projection));
 
-                    // brick_wall_texture.bind(0);
-                    // awesome_face_texture.bind(1);
+                    brick_wall_texture.bind(0);
+                    awesome_face_texture.bind(1);
 
                     glBindVertexArray(vao);
-                    // glDrawArrays(GL_TRIANGLES, 0, vertices.size());
                     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
                 }
             }

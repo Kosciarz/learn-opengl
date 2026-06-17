@@ -1,6 +1,7 @@
 #include "Engine.hpp"
 #include "Shader.hpp"
 #include "Texture.hpp"
+#include "Camera.hpp"
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
@@ -23,6 +24,7 @@ struct Vertex {
 int main() {
     try {
         learn::Engine engine;
+        learn::Camera camera;
 
         std::array<Vertex, 24> vertices = {{
             // front face bottom left
@@ -229,11 +231,19 @@ int main() {
 
         glEnable(GL_DEPTH_TEST);
 
+        double last_time = glfwGetTime();
+
         while (!glfwWindowShouldClose(engine.window())) {
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-            const glm::mat4 view = engine.camera().view_matrix();
+            const double current_time = glfwGetTime();
+            const double delta_time = current_time - last_time;
+            last_time = current_time;
+
+            camera.process_key_input(engine.window(), delta_time);
+
+            const glm::mat4 view = camera.view_matrix();
 
             const glm::mat4 projection =
                 glm::perspective(glm::radians(45.0f), engine.aspect_ratio(), 0.1f, 100.0f);

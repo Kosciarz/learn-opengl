@@ -83,11 +83,6 @@ namespace learn {
         if (key == GLFW_KEY_ESCAPE) {
             glfwSetWindowShouldClose(window, true);
         }
-
-        Engine* engine = static_cast<Engine*>(glfwGetWindowUserPointer(window));
-        if (engine) {
-            engine->m_camera.process_key_input(key);
-        }
     }
 
 } // namespace learn

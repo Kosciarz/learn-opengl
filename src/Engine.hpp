@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Camera.hpp"
-
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
@@ -22,8 +20,6 @@ namespace learn {
             return static_cast<float>(m_width) / static_cast<float>(m_height);
         }
 
-        [[nodiscard]] Camera& camera() { return m_camera; }
-
     private:
         static void framebuffer_size_callback(GLFWwindow* window,
                                               const int width,
@@ -39,8 +35,6 @@ namespace learn {
 
         int m_width;
         int m_height;
-
-        Camera m_camera;
     };
 
 } // namespace learn

@@ -6,40 +6,30 @@
 
 namespace learn {
 
-    Camera::Camera()
-        : m_front{0.0f, 0.0f, -1.0f} {
-        m_position = glm::vec3{0.0f, 0.0f, 3.0f};
-
-        const glm::vec3 target{0.0f, 0.0f, 0.0f};
-        const glm::vec3 direction = glm::normalize(m_position - target);
-
-        const glm::vec3 world_up{0.0f, 1.0f, 0.0f};
-        m_right = glm::normalize(glm::cross(world_up, direction));
-
-        m_up = glm::cross(direction, m_right);
-    }
+    Camera::Camera(const glm::vec3& position)
+        : m_position{position},
+          m_world_up{0.0f, 1.0f, 0.0f},
+          m_front{0.0f, 0.0f, -1.0f} {}
 
     glm::mat4 Camera::view_matrix() const {
-        return glm::lookAt(m_position, glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{0.0f, 1.0f, 0.0f});
+        return glm::lookAt(m_position, m_position + m_front, m_world_up);
     }
 
-    void Camera::process_key_input(const int key) {
-        constexpr auto camera_speed = 0.05f;
+    void Camera::process_key_input(GLFWwindow* window, const double delta_time) {
+        const float camera_speed = 2.5f * static_cast<float>(delta_time);
 
-        if (key == GLFW_KEY_W) {
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
             m_position += m_front * camera_speed;
         }
-        if (key == GLFW_KEY_S) {
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
             m_position -= m_front * camera_speed;
         }
-        if (key == GLFW_KEY_A) {
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
             m_position -= glm::normalize(glm::cross(m_front, m_up)) * camera_speed;
         }
-        if (key == GLFW_KEY_D) {
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
             m_position += glm::normalize(glm::cross(m_front, m_up)) * camera_speed;
         }
     }
-
-    void Camera::update(const glm::vec3& position) { m_position = position; }
 
 } // namespace learn

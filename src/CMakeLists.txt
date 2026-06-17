@@ -4,6 +4,7 @@ set(SOURCES
     "Engine.cpp"
     "Shader.cpp"
     "Texture.cpp"
+    "Camera.cpp"
     "stb_image_impl.cpp"
 )
 
@@ -12,6 +13,7 @@ set(HEADERS
     "Engine.hpp"
     "Shader.hpp"
     "Texture.hpp"
+    "Camera.hpp"
 )
 
 add_executable(LearnOpenGL ${SOURCES} ${HEADERS})

@@ -233,15 +233,9 @@ int main() {
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-            constexpr float radius = 10.0f;
-            const float camera_x = std::sin(glfwGetTime()) * radius;
-            const float camera_z = std::cos(glfwGetTime()) * radius;
+            const glm::mat4 view = engine.camera().view_matrix();
 
-            glm::mat4 view = glm::lookAt(glm::vec3{camera_x, 0.0f, camera_z},
-                                         glm::vec3{0.0f, 0.0f, 0.0f},
-                                         glm::vec3{0.0f, 1.0f, 0.0f});
-
-            glm::mat4 projection =
+            const glm::mat4 projection =
                 glm::perspective(glm::radians(45.0f), engine.aspect_ratio(), 0.1f, 100.0f);
 
             for (int i = 0; i < cube_positions.size(); ++i) {

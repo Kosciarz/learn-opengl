@@ -68,14 +68,26 @@ namespace learn {
         glViewport(0, 0, width, height);
 
         Engine* engine = static_cast<Engine*>(glfwGetWindowUserPointer(window));
-        engine->m_width = width;
-        engine->m_height = height;
+        if (engine) {
+            engine->m_width = width;
+            engine->m_height = height;
+        }
     }
 
     void Engine::key_callback(
         GLFWwindow* window, const int key, const int scancode, const int action, const int mods) {
-        if (action == GLFW_RELEASE && key == GLFW_KEY_ESCAPE) {
+        if (action != GLFW_PRESS) {
+            return;
+        }
+
+        if (key == GLFW_KEY_ESCAPE) {
             glfwSetWindowShouldClose(window, true);
         }
+
+        Engine* engine = static_cast<Engine*>(glfwGetWindowUserPointer(window));
+        if (engine) {
+            engine->m_camera.process_key_input(key);
+        }
     }
+
 } // namespace learn

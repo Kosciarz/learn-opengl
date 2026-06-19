@@ -1,6 +1,6 @@
 #include "Texture.hpp"
+#include "OpenGLHeaders.hpp"
 
-#include <glad/gl.h>
 #include "stb_image.h"
 
 #include <filesystem>

@@ -1,6 +1,6 @@
 #include "InputHandler.hpp"
 
-#include <GLFW/glfw3.h>
+#include "OpenGLHeaders.hpp"
 
 namespace learn {
 

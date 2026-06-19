@@ -1,9 +1,7 @@
 #include "Engine.hpp"
 #include "GLUtils.hpp"
 #include "InputHandler.hpp"
-
-#include <glad/gl.h>
-#include <GLFW/glfw3.h>
+#include "OpenGLHeaders.hpp"
 
 #include <stdexcept>
 #include <print>
@@ -30,7 +28,7 @@ namespace learn {
 
         glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 
-        m_window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Learn OpenGL", nullptr, nullptr);
+        m_window = glfwCreateWindow(m_width, m_height, "Learn OpenGL", nullptr, nullptr);
         if (!m_window) {
             throw std::runtime_error{"Failed to create window"};
         }

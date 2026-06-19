@@ -1,7 +1,6 @@
 #include "Camera.hpp"
 #include "InputHandler.hpp"
 
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_transform.hpp>
 

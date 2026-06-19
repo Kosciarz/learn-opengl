@@ -1,6 +1,5 @@
 #include "Shader.hpp"
-
-#include <glad/gl.h>
+#include "OpenGLHeaders.hpp"
 
 #include <fstream>
 #include <filesystem>

@@ -10,6 +10,7 @@ set(SOURCES
 )
 
 set(HEADERS
+    "OpenGLHeaders.hpp"
     "GLUtils.hpp"
     "Engine.hpp"
     "Shader.hpp"

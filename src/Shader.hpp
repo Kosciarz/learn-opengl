@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glad/gl.h>
+#include "OpenGLHeaders.hpp"
 
 #include <filesystem>
 

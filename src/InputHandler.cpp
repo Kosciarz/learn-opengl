@@ -1,5 +1,4 @@
 #include "InputHandler.hpp"
-
 #include "OpenGLHeaders.hpp"
 
 namespace learn {

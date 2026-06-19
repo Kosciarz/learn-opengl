@@ -44,6 +44,7 @@ namespace learn {
         glfwSetKeyCallback(m_window, Engine::key_callback);
         glfwSetCursorPosCallback(m_window, Engine::cursor_callback);
         glfwSetScrollCallback(m_window, Engine::scroll_callback);
+        glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
         glViewport(0, 0, m_width, m_height);
 

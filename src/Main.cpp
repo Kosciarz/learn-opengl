@@ -24,7 +24,6 @@ struct Vertex {
 int main() {
     try {
         learn::Engine engine;
-        learn::Camera camera;
 
         std::array<Vertex, 24> vertices = {{
             // front face bottom left
@@ -227,10 +226,6 @@ int main() {
         const auto awesome_face_path = TEXTURE_DIR / "awesomeface.png";
         const learn::Texture awesome_face_texture{awesome_face_path};
 
-        // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-        glEnable(GL_DEPTH_TEST);
-
         double last_time = glfwGetTime();
 
         while (!glfwWindowShouldClose(engine.window())) {
@@ -241,21 +236,24 @@ int main() {
             const double delta_time = current_time - last_time;
             last_time = current_time;
 
-            camera.process_key_input(engine.window(), delta_time);
+            glfwPollEvents();
+            engine.input().update(engine.window());
+            engine.camera().update(engine.input().state(), delta_time);
+            engine.input().flush();
 
-            const glm::mat4 view = camera.view_matrix();
+            const glm::mat4 view = engine.camera().view_matrix();
 
             const glm::mat4 projection =
                 glm::perspective(glm::radians(45.0f), engine.aspect_ratio(), 0.1f, 100.0f);
 
-            for (int i = 0; i < cube_positions.size(); ++i) {
-                glm::mat4 model = glm::mat4(1.0f);
-                model = glm::translate(model, cube_positions[i]);
-                const float angle = 20.0f * i;
-                model = glm::rotate(model, glm::radians(angle), glm::vec3{1.0f, 0.3f, 0.5f});
+            // drawing
+            {
+                for (int i = 0; i < cube_positions.size(); ++i) {
+                    glm::mat4 model = glm::mat4(1.0f);
+                    model = glm::translate(model, cube_positions[i]);
+                    const float angle = 20.0f * i;
+                    model = glm::rotate(model, glm::radians(angle), glm::vec3{1.0f, 0.3f, 0.5f});
 
-                // drawing
-                {
                     shader.use();
                     glUniform1i(shader.uniform_location("texture0"), 0);
                     glUniform1i(shader.uniform_location("texture1"), 1);
@@ -278,7 +276,6 @@ int main() {
             }
 
             glfwSwapBuffers(engine.window());
-            glfwPollEvents();
         }
 
         glDeleteVertexArrays(1, &vao);

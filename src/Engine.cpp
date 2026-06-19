@@ -1,5 +1,6 @@
 #include "Engine.hpp"
 #include "GLUtils.hpp"
+#include "InputHandler.hpp"
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
@@ -41,11 +42,12 @@ namespace learn {
         }
 
         glfwSetWindowUserPointer(m_window, this);
-
-        glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-
         glfwSetFramebufferSizeCallback(m_window, Engine::framebuffer_size_callback);
         glfwSetKeyCallback(m_window, Engine::key_callback);
+        glfwSetCursorPosCallback(m_window, Engine::cursor_callback);
+        glfwSetScrollCallback(m_window, Engine::scroll_callback);
+
+        glViewport(0, 0, m_width, m_height);
 
         int flags;
         glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
@@ -54,6 +56,8 @@ namespace learn {
             glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
             glDebugMessageCallback(gl_utils::gl_debug_callback, nullptr);
         }
+        // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glEnable(GL_DEPTH_TEST);
     }
 
     Engine::~Engine() {
@@ -67,21 +71,31 @@ namespace learn {
     void Engine::framebuffer_size_callback(GLFWwindow* window, const int width, const int height) {
         glViewport(0, 0, width, height);
 
-        Engine* engine = static_cast<Engine*>(glfwGetWindowUserPointer(window));
-        if (engine) {
-            engine->m_width = width;
-            engine->m_height = height;
+        Engine* e = static_cast<Engine*>(glfwGetWindowUserPointer(window));
+        if (e) {
+            e->m_width = width;
+            e->m_height = height;
         }
     }
 
     void Engine::key_callback(
         GLFWwindow* window, const int key, const int scancode, const int action, const int mods) {
-        if (action != GLFW_PRESS) {
-            return;
-        }
-
-        if (key == GLFW_KEY_ESCAPE) {
+        if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
             glfwSetWindowShouldClose(window, true);
+        }
+    }
+
+    void Engine::cursor_callback(GLFWwindow* window, const double x, const double y) {
+        auto* e = static_cast<Engine*>(glfwGetWindowUserPointer(window));
+        if (e) {
+            e->m_input.on_mouse_move(x, y);
+        }
+    }
+
+    void Engine::scroll_callback(GLFWwindow* window, const double dx, const double dy) {
+        auto* e = static_cast<Engine*>(glfwGetWindowUserPointer(window));
+        if (e) {
+            e->m_input.on_scroll(dx, dy);
         }
     }
 

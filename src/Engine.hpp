@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Camera.hpp"
+#include "InputHandler.hpp"
+
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
@@ -14,8 +17,11 @@ namespace learn {
         ~Engine();
 
         [[nodiscard]] GLFWwindow* window() const { return m_window; }
-        [[nodiscard]] int width() const { return m_width; }
-        [[nodiscard]] int height() const { return m_height; }
+        [[nodiscard]] Camera& camera() { return m_camera; };
+        [[nodiscard]] InputHandler& input() { return m_input; }
+
+        [[nodiscard]] int window_width() const { return m_width; }
+        [[nodiscard]] int window_height() const { return m_height; }
         [[nodiscard]] float aspect_ratio() const {
             return static_cast<float>(m_width) / static_cast<float>(m_height);
         }
@@ -29,12 +35,17 @@ namespace learn {
                                  const int scancode,
                                  const int action,
                                  const int mods);
+        static void cursor_callback(GLFWwindow* window, const double x, const double y);
+        static void scroll_callback(GLFWwindow* window, const double dx, const double dy);
 
     private:
         GLFWwindow* m_window;
 
         int m_width;
         int m_height;
+
+        Camera m_camera;
+        InputHandler m_input;
     };
 
 } // namespace learn

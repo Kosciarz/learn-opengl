@@ -242,8 +242,8 @@ int main() {
 
             const glm::mat4 view = engine.camera().view_matrix();
 
-            const glm::mat4 projection =
-                glm::perspective(glm::radians(45.0f), engine.aspect_ratio(), 0.1f, 100.0f);
+            const glm::mat4 projection = glm::perspective(
+                glm::radians(engine.camera().fov()), engine.aspect_ratio(), 0.1f, 100.0f);
 
             // drawing
             {

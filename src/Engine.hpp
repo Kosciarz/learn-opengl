@@ -14,6 +14,8 @@ namespace learn {
         Engine();
         ~Engine();
 
+        void run();
+
         [[nodiscard]] GLFWwindow* window() const { return m_window; }
         [[nodiscard]] Camera& camera() { return m_camera; };
         [[nodiscard]] InputHandler& input() { return m_input; }

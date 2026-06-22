@@ -2,9 +2,15 @@
 #include "GLUtils.hpp"
 #include "InputHandler.hpp"
 #include "OpenGLHeaders.hpp"
+#include "Cube.hpp"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <stdexcept>
 #include <print>
+#include <array>
+#include <vector>
 
 namespace learn {
 
@@ -65,6 +71,52 @@ namespace learn {
         }
 
         glfwTerminate();
+    }
+
+    void Engine::run() {
+        std::array<glm::vec3, 10> cube_positions = {{
+            glm::vec3{0.0f, 0.0f, 0.0f},
+            glm::vec3{2.0f, 5.0f, -15.0f},
+            glm::vec3{-1.5f, -2.2f, -2.5f},
+            glm::vec3{-3.8f, -2.0f, -12.3f},
+            glm::vec3{2.4f, -0.4f, -3.5f},
+            glm::vec3{-1.7f, 3.0f, -7.5f},
+            glm::vec3{1.3f, -2.0f, -2.5f},
+            glm::vec3{1.5f, 2.0f, -2.5f},
+            glm::vec3{1.5f, 0.2f, -1.5f},
+            glm::vec3{-1.3f, 1.0f, -1.5f},
+        }};
+
+        std::vector<learn::Cube> cubes;
+        for (std::size_t i = 0; i < cube_positions.size(); ++i) {
+            cubes.emplace_back(cube_positions[i], 20.0f * i);
+        }
+
+        double last_time = glfwGetTime();
+
+        while (!glfwWindowShouldClose(m_window)) {
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+
+            const double current_time = glfwGetTime();
+            const double delta_time = current_time - last_time;
+            last_time = current_time;
+
+            glfwPollEvents();
+            m_input.update(m_window);
+            m_camera.update(m_input.state(), delta_time);
+            m_input.flush();
+
+            const glm::mat4 view = m_camera.view_matrix();
+            const glm::mat4 projection =
+                glm::perspective(glm::radians(m_camera.fov()), aspect_ratio(), 0.1f, 100.0f);
+
+            for (const auto& cube : cubes) {
+                cube.render(view, projection);
+            }
+
+            glfwSwapBuffers(m_window);
+        }
     }
 
     void Engine::framebuffer_size_callback(GLFWwindow* window, const int width, const int height) {
